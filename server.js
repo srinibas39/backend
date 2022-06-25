@@ -9,20 +9,32 @@ const server = http.createServer((req, res) => {
 
     res.setHeader('content-type', 'text/html');
     // res.write(`<h1>Hello computer</h1>`);
-   
+    let path="./pages"
     switch (req.url) {
         case "/":
-            path = "./pages/index.html";
+            path += "/index.html";
+            res.statusCode=200;
+            break;
         case '/flipkart':
-            path = './pages/Flipkart.html'
+            path += '/Flipkart.html';
+            res.statusCode=200
+            break;
         case `/amazon`:
-            path = "./pages/Amazon.html"
+            path += "/Amazon.html";
+            res.statusCode=200
+            break;
+        case "/amazonaa":
+            res.statusCode=301;
+            res.setHeader("location","/amazon");
+            res.end();
+            break;
         default:
-            path = "./pages/404.html"
+            path += "/404.html"
+            res.statusCode=400;
+            break;
     }
 
-
-
+    
     fs.readFile(path, (error, fileData) => {
         if (error) {
             console.log(error);
