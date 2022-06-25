@@ -22,9 +22,11 @@ let users = [
     }
 ];
 // get
-const getUser = (req, res) => {
+const getUser = (req, res,next) => {
 
     res.send(users);
+    console.log("get user encountered");
+    next();
 
 }
 
@@ -73,6 +75,15 @@ const getSignup = (req, res) => {
     res.sendFile("./pages/signupForm.html", { root: __dirname });
 }
 
+const middleware1 = (req, res, next) => {
+    console.log("middleware1 encountered");
+    next();
+}
+
+const middleware2=(req,res)=>{
+    console.log("middleware2 encounteres");
+}
+
 // Mounting
 const userRouter = express.Router();
 const authRouter = express.Router();
@@ -82,7 +93,7 @@ app.use("/auth", authRouter)
 
 userRouter
     .route("/")
-    .get(getUser)
+    .get(middleware1, getUser, middleware2)
     .post(postUser)
     .patch(updateUser)
     .delete(deleteUser)
