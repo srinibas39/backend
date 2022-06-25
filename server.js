@@ -2,10 +2,22 @@
 const http = require('http');
 const fs = require("fs");
 
+const _=require("lodash");
+
 const server = http.createServer((req, res) => {
     console.log("request made by client to server");
     // console.log(req.method);
     // console.log(req.url);
+
+    // lodash
+
+    let num=_.random(0,20);
+    console.log(num);
+
+    const greet=_.once(()=>console.log("print function"));
+
+   greet();
+   greet();
 
     res.setHeader('content-type', 'text/html');
     // res.write(`<h1>Hello computer</h1>`);
