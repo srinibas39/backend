@@ -35,8 +35,6 @@ const postUser = (req, res) => {
     res.send(users);
 
 }
-
-
 // update
 const updateUser = (req, res) => {
 
@@ -44,7 +42,6 @@ const updateUser = (req, res) => {
     res.send(newUsers)
 
 }
-
 // delete
 const deleteUser = (req, res) => {
 
@@ -52,8 +49,6 @@ const deleteUser = (req, res) => {
     res.send(users);
 
 }
-
-
 // parameter
 const getUserById = (req, res) => {
 
@@ -62,16 +57,28 @@ const getUserById = (req, res) => {
     res.send({ ...user })
 
 }
-
 // Query
 
 // app.get("/users", (req, res) => {
 //     console.log(req.query)
 // })
 
+const postSignup = (req, res) => {
+    res.json({
+        message: "signed up succesful"
+    })
+}
+
+const getSignup = (req, res) => {
+    res.sendFile("./pages/signupForm.html", { root: __dirname });
+}
+
 // Mounting
 const userRouter = express.Router();
+const authRouter = express.Router();
+
 app.use("/users", userRouter)
+app.use("/auth", authRouter)
 
 userRouter
     .route("/")
@@ -83,6 +90,11 @@ userRouter
 userRouter
     .route("/:id")
     .get(getUserById)
+
+authRouter
+    .route("/signup")
+    .post(postSignup)
+    .get(getSignup)
 
 
 
