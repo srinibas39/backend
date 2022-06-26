@@ -20,7 +20,8 @@
   "homepage": "https://github.com/srinibas39/backend#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mongoose": "^6.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.18"
