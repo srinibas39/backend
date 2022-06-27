@@ -24,7 +24,7 @@ mongoose.connect(db_link)
 
 // Schema
 
-const userScheme = {
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         require: true
@@ -44,9 +44,21 @@ const userScheme = {
         require: true,
         min: 8
     }
-}
+})
+
+// Hooks in mongoose
+
+
+userSchema.pre('save', () => console.log("before saving in the database"));
+
+userSchema.post('save', () => console.log("after saving in the database"));
+
 // model
-const userModel = mongoose.model("userModel", userScheme);
+const userModel = mongoose.model("userModel", userSchema);
+
+
+
+
 
 // ----------------------------------------------------------------
 
@@ -145,8 +157,11 @@ const updateSignup = async (req, res) => {
     res.send(data);
 }
 
-const deleteSignup=async(req,res)=>{
-    const deletedUser=await userModel.findOneAndDelete({username:"gopal"});
+const deleteSignup = async (req, res) => {
+    const deletedUser = await userModel.findOneAndDelete({ username: "srinibas" });
+    res.send({
+        mesage:"deleted succesfully"
+    })
 }
 
 // Mounting

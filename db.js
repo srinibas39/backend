@@ -38,6 +38,8 @@ const userScheme = {
 // model
 const userModel = mongoose.model("userModel", userScheme);
 
+
+
 // IIFE function 
 (async () => {
     try {
@@ -56,3 +58,4 @@ const userModel = mongoose.model("userModel", userScheme);
     }
 
 })()
+
