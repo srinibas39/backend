@@ -1,5 +1,6 @@
 
 const express = require("express");
+const bcrypt = require('bcryptjs');
 
 
 const app = express();
@@ -49,7 +50,17 @@ const userSchema = new mongoose.Schema({
 // Hooks in mongoose
 
 
-userSchema.pre('save', () => console.log("before saving in the database"));
+userSchema.pre('save', function () {
+    console.log("before saving in the database")
+});
+userSchema.pre('save', async function () {
+
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    this.confirmPassword = hashedPassword;
+
+});
 
 userSchema.post('save', () => console.log("after saving in the database"));
 
@@ -160,7 +171,7 @@ const updateSignup = async (req, res) => {
 const deleteSignup = async (req, res) => {
     const deletedUser = await userModel.findOneAndDelete({ username: "srinibas" });
     res.send({
-        mesage:"deleted succesfully"
+        mesage: "deleted succesfully"
     })
 }
 
