@@ -37,15 +37,14 @@ const deleteSignup = async (req, res) => {
     })
 }
 
-const getLogin = async(req, res) => {
+const getLogin = async (req, res) => {
 
     const data = req.body;
-    const user =await userModel.findOne({ email: data.email });
-    
-    console.log(user);
+    const user = await userModel.findOne({ email: data.email });
 
     if (user) {
         if (user.password === data.password) {
+            res.cookie("isLoggedin", true)
             res.send({
                 message: "loggedin successfully"
             })

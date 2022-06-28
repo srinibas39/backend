@@ -70,11 +70,7 @@ const middleware2 = (req, res) => {
     console.log("middleware2 encounteres");
 }
 
-
-
 // Router
-
-
 userRouter
     .route("/")
     .get(middleware1, getUser, middleware2)

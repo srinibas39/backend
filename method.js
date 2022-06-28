@@ -12,10 +12,13 @@ app.use(cookieParser())
 const userRouter = require("./Routers/userRouter");
 const authRouter = require("./Routers/authRouter");
 const cookiesRouter = require("./Routers/cookieRouter");
+const cartRouter = require("./Routers/cartRouter")
 
 app.use("/users", userRouter)
 app.use("/auth", authRouter)
 app.use("/cookies", cookiesRouter)
+app.use("/cart", cartRouter);
+
 
 
 
