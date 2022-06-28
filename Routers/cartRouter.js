@@ -1,16 +1,11 @@
 
 const express = require("express");
 
+const {getCart}=require("../Controller/CartController")
+
 const cartRouter = express.Router();
 
 const privateRoute = require("./PrivateRoute")
-
-const getCart = (req, res) => {
-    res.send({
-        mesage: "cart page"
-    })
-}
-
 
 
 cartRouter
