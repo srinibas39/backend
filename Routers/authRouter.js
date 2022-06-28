@@ -1,7 +1,9 @@
 const express = require("express");
 
 const authRouter = express.Router();
-const userModel = require("../Models/model")
+const userModel = require("../Models/model");
+var jwt = require('jsonwebtoken');
+const SECRET_KEY = "davdsjkbvjsobuoo2uwejfwoehf";
 
 const postSignup = async (req, res) => {
 
@@ -44,9 +46,13 @@ const getLogin = async (req, res) => {
 
     if (user) {
         if (user.password === data.password) {
-            res.cookie("isLoggedin", true)
+
+            const uId = user._id;
+            const token = jwt.sign({ payload: uId }, SECRET_KEY);
+            res.cookie("token", token);
+
             res.send({
-                message: "loggedin successfully"
+                message: "loggedin successfully",
             })
         }
         else {
