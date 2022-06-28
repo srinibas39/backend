@@ -37,11 +37,41 @@ const deleteSignup = async (req, res) => {
     })
 }
 
+const getLogin = async(req, res) => {
+
+    const data = req.body;
+    const user =await userModel.findOne({ email: data.email });
+    
+    console.log(user);
+
+    if (user) {
+        if (user.password === data.password) {
+            res.send({
+                message: "loggedin successfully"
+            })
+        }
+        else {
+            res.send({
+                message: "incorrect password"
+            })
+        }
+    }
+    else {
+        res.send({
+            message: "user not found"
+        })
+    }
+}
+
 authRouter
     .route("/signup")
     .post(postSignup)
     .get(getSignup)
     .patch(updateSignup)
     .delete(deleteSignup)
+
+authRouter
+    .route("/login")
+    .post(getLogin)
 
 module.exports = authRouter;    
