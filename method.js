@@ -1,11 +1,13 @@
 
 const express = require("express");
 const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser')
 
 
 const app = express();
 app.listen(3000);
 app.use(express.json());
+app.use(cookieParser())
 
 // DATABASE
 // --------
@@ -66,10 +68,6 @@ userSchema.post('save', () => console.log("after saving in the database"));
 
 // model
 const userModel = mongoose.model("userModel", userSchema);
-
-
-
-
 
 // ----------------------------------------------------------------
 
@@ -175,12 +173,26 @@ const deleteSignup = async (req, res) => {
     })
 }
 
+const setCookies = (req, res) => {
+    // res.setHeader('Set-Cookie',"isLoggedIn=true");
+    res.cookie("isLoggedIn", false, { maxAge: 1000 * 60 * 60, secure: true, httpOnly: true })
+    res.send("cookie has been sent");
+
+}
+
+const getCookies = (req, res) => {
+    const cookies = req.cookies.isLoggedIn;
+    res.send(cookies);
+}
+
 // Mounting
 const userRouter = express.Router();
 const authRouter = express.Router();
+const cookiesRouter = express.Router();
 
 app.use("/users", userRouter)
 app.use("/auth", authRouter)
+app.use("/cookies", cookiesRouter)
 
 userRouter
     .route("/")
@@ -199,6 +211,17 @@ authRouter
     .get(getSignup)
     .patch(updateSignup)
     .delete(deleteSignup)
+
+cookiesRouter
+    .route("/getCookies")
+    .get(getCookies)
+
+cookiesRouter
+    .route("/setCookies")
+    .get(setCookies)
+
+
+
 
 
 
