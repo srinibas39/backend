@@ -111,4 +111,5 @@ const logout = async (req, res) => {
     }
 }
 
+
 module.exports = { getUser, getAllUser, updateUser, deleteUser, forgotPassword, resetPassword, logout }
