@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUser, getAllUser, updateUser, deleteUser } = require("../Controller/UserController");
+const { getUser, getAllUser, updateUser, deleteUser, logout, forgotPassword, resetPassword } = require("../Controller/UserController");
 const privateRoute = require("./PrivateRoute");
 
 
@@ -23,5 +23,10 @@ userRouter
 userRouter
     .route("/ResetPassword")
     .post(resetPassword)
+
+userRouter
+    .route("/logout")
+    .post(logout)
+
 
 module.exports = userRouter;    

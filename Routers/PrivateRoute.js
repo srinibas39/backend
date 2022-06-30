@@ -9,6 +9,7 @@ const privateRoute = (req, res, next) => {
         }
     }
     else {
+        res.redirect("/auth/login");
         res.send({
             message: "please log in"
         })

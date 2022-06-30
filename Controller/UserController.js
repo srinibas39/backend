@@ -99,4 +99,16 @@ const resetPassword = async (req, res) => {
     }
 }
 
-module.exports = { getUser, getAllUser, updateUser, deleteUser, forgotPassword,resetPassword }
+const logout = async (req, res) => {
+    try {
+        res.cookie("token", "");
+        res.send({
+            message: "logout successfully"
+        })
+    }
+    catch (err) {
+        res.send(err.message)
+    }
+}
+
+module.exports = { getUser, getAllUser, updateUser, deleteUser, forgotPassword, resetPassword, logout }
