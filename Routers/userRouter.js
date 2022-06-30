@@ -1,5 +1,7 @@
 const express = require("express");
 const { getUser, getAllUser, updateUser, deleteUser } = require("../Controller/UserController");
+const privateRoute = require("./PrivateRoute");
+
 
 const userRouter = express.Router();
 
@@ -10,8 +12,8 @@ userRouter
 
 userRouter
     .route("/:_id")
-    .get(getUser)
-    .patch(updateUser)
-    .delete(deleteUser)
+    .get(privateRoute, getUser)
+    .patch(privateRoute, updateUser)
+    .delete(privateRoute, deleteUser)
 
 module.exports = userRouter;    

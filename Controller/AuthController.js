@@ -1,7 +1,7 @@
 
 
 const userModel = require("../Models/model");
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const SECRET_KEY = "davdsjkbvjsobuoo2uwejfwoehf";
 
 const postSignup = async (req, res) => {
