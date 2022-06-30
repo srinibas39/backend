@@ -2,6 +2,8 @@
 // --------
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
+const crypto = require("crypto");
+
 
 // IzroW91caV9P0P5g
 const db_link = "mongodb+srv://admin:AV7ocFpDfNjAFltq@cluster0.wydsr.mongodb.net/?retryWrites=true&w=majority";
@@ -43,8 +45,24 @@ const userSchema = new mongoose.Schema({
 const userModel = mongoose.model("userModel", userSchema);
 
 
-// Hooks in mongoose
+// reset password
+userSchema.methods.createResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    this.resetToken = resetToken;
+    return resetToken;
+}
 
+// resetPasswordHandler
+userSchema.methods.resetPasswordHandler = function (password, confirmPassword) {
+    this.password = password;
+    this.confirmPassword = confirmPassword;
+    this.resetToken = undefined;
+}
+
+
+
+
+// Hooks in mongoose
 
 userSchema.pre('save', function () {
     console.log("before saving in the database")
@@ -60,4 +78,4 @@ userSchema.pre('save', async function () {
 
 userSchema.post('save', () => console.log("after saving in the database"));
 
-module.exports=userModel
+module.exports = userModel

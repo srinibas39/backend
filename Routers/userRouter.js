@@ -16,4 +16,12 @@ userRouter
     .patch(privateRoute, updateUser)
     .delete(privateRoute, deleteUser)
 
+userRouter
+    .route("/forgotPassword")
+    .post(forgotPassword)
+
+userRouter
+    .route("/ResetPassword")
+    .post(resetPassword)
+
 module.exports = userRouter;    

@@ -57,4 +57,46 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = { getUser, getAllUser, updateUser, deleteUser }
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await userModel.findOne({ email: email });
+        if (user) {
+            const resetToken = user.createResetToken();
+            const resetPasswordLink = `${req.protocol}://${req.get("host")}/${resetToken}`;
+            // send email to user using nodemailer
+        }
+        else {
+            res.send({
+                message: "user does not exist"
+            })
+        }
+
+    }
+    catch (err) {
+        res.send(err.message)
+    }
+}
+
+const resetPassword = async (req, res) => {
+    try {
+        const token = user.params.token;
+        const { password, confirmPassword } = req.body;
+        const user = await userModel.findOne({ resetToken: token });
+        if (user) {
+            user.resetPasswordHandler(password, confirmPassword);
+            await user.save();
+        }
+        else {
+            res.send({
+                message: "user not found"
+            })
+        }
+
+    }
+    catch (err) {
+        res.send(err.message)
+    }
+}
+
+module.exports = { getUser, getAllUser, updateUser, deleteUser, forgotPassword,resetPassword }
